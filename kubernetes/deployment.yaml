@@ -16,7 +16,11 @@ spec:
         app: soccer-blog
     spec:
       containers:
+<<<<<<< HEAD
       - image: mayowa88/soccer_blog:17:78
+=======
+      - image: mayowa88/soccer_blog:126
+>>>>>>> 11369af (i am trying to get a fast forward error message)
         name: soccer-blog-nd49b
         envFrom:
         - secretRef:
