@@ -20,7 +20,7 @@ pipeline{
         stage('Checkout') {
             steps{
                 // git branch: 'main', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev.git'
-                git branch: 'main', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev.git'
+                // git branch: 'main2', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev2.git'
                 checkout scm
             }
         }
@@ -34,7 +34,7 @@ pipeline{
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('my-scanner') {
-                    sh "/var/lib/jenkins/workspace/soccer_demo@tmp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.projectKey=Soccer_Blog -Dsonar.sources=."
+                    sh "/var/lib/jenkins/workspace/soccer_blog@tmp/sonar-scanner-5.0.1.3006-linux/bin/sonar-scanner -Dsonar.projectKey=Soccer_Blog -Dsonar.sources=."
                 }
             }
         }
@@ -70,12 +70,14 @@ pipeline{
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
                     pwd
-                    git config --global --add safe.directory /var/lib/jenkins/workspace/soccer_demo
+                    git config --global --add safe.directory /var/lib/jenkins/workspace/soccer_blog
                     git status
                     git config user.email "osinjolumayowa@gmail.com"
                     git config user.name "mayowa osinjolu"
                     BUILD_NUMBER=${BUILD_NUMBER}
-                    sed -i "s/replaceImageTag/${BUILD_NUMBER}/g" kubernetes/deployment.yaml
+                    replaceImageTag=soccer_blog
+                    sed -i "s/${replaceImageTag}./${replaceImageTag}:${BUILD_NUMBER}/g" kubernetes/deployment.yaml
+                    git pull origin main
                     git add kubernetes/deployment.yaml
                     git commit -a -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
