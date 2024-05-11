@@ -1,7 +1,7 @@
 .DS_Store
 venv/
 # __pycache__/
-Terraform/
+# Terraform/
 .scannerwork
 sonar-scanner-5.0.1.3006-linux/
 
