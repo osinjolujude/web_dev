@@ -15,7 +15,7 @@ pipeline{
                 sh 'python3 --version'
                 sh 'docker -v'
                 echo "Installation packages complete"
-            }`
+            }
         }
         stage('Checkout') {
             steps{
