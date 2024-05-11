@@ -15,13 +15,13 @@ pipeline{
                 sh 'python3 --version'
                 sh 'docker -v'
                 echo "Installation packages complete"
-            }
+            }`
         }
         stage('Checkout') {
             steps{
+                git branch: 'main', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev.git'
                 // git branch: 'main', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev.git'
-                // git branch: 'main2', credentialsId: 'github', url: 'https://github.com/osinjolujude/web_dev2.git'
-                checkout scm
+                // checkout scm
             }
         }
         stage('Install dependencies') {
@@ -54,13 +54,6 @@ pipeline{
             }
         }
         }
-        // stage('Build and deploy') {
-        //     steps {
-        //         // Build and deploy your Python web app
-        //         // Example: sh 'python manage.py migrate && python manage.py runserver'
-        //         sh 'python main.py migrate && python main.py runserver'
-        //     }
-        // }
         stage('Update Deployment File') {
         environment {
             GIT_REPO_NAME = "web_dev"
@@ -74,10 +67,12 @@ pipeline{
                     git status
                     git config user.email "osinjolumayowa@gmail.com"
                     git config user.name "mayowa osinjolu"
-                    BUILD_NUMBER=${BUILD_NUMBER}
-                    replaceImageTag=soccer_blog
-                    sed -i "s/${replaceImageTag}./${replaceImageTag}:${BUILD_NUMBER}/g" kubernetes/deployment.yaml
                     git pull origin main
+                    BUILD_NUMBER=${BUILD_NUMBER}
+                    replaceImageTag=mayowa/soccer_blog
+                    cat kubernetes/deployment.yaml | grep mayowa88
+                    sed "s|soccer_blog.*...|soccer_blog:${BUILD_NUMBER}|g" kubernetes/deployment.yaml
+                    cat kubernetes/deployment.yaml | grep mayowa88
                     git add kubernetes/deployment.yaml
                     git commit -a -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
