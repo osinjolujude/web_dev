@@ -62,6 +62,7 @@ pipeline{
         steps {
             withCredentials([string(credentialsId: 'github', variable: 'GITHUB_TOKEN')]) {
                 sh '''
+                    echo ************GOD IS GREAT****************
                     pwd
                     git config --global --add safe.directory /var/lib/jenkins/workspace/soccer_blog
                     git status
