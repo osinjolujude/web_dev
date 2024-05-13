@@ -72,7 +72,7 @@ pipeline{
                     BUILD_NUMBER=${BUILD_NUMBER}
                     replaceImageTag=mayowa/soccer_blog
                     cat kubernetes/deployment.yaml | grep mayowa88
-                    sed -i kubernetes/deployment.yaml "s/soccer_blog.*.../soccer_blog:${BUILD_NUMBER}/g" kubernetes/deployment.yaml
+                    sed -i "s/soccer_blog.*.../soccer_blog:${BUILD_NUMBER}/g" kubernetes/deployment.yaml
                     cat kubernetes/deployment.yaml | grep mayowa88
                     git status
                     git add kubernetes/deployment.yaml
