@@ -16,7 +16,7 @@ spec:
         app: soccer-blog
     spec:
       containers:
-      - image: mayowa88/soccer_blog:72
+      - image: mayowa88/soccer_blog:73
         name: soccer-blog-nd49b
         envFrom:
         - secretRef:
