@@ -72,7 +72,7 @@ pipeline{
                     BUILD_NUMBER=${BUILD_NUMBER}
                     replaceImageTag=mayowa/soccer_blog
                     cat kubernetes/deployment.yaml | grep mayowa88
-                    sed "s|soccer_blog.*...|soccer_blog:${BUILD_NUMBER}|g" kubernetes/deployment.yaml
+                    sed "s/soccer_blog.*.../soccer_blog:${BUILD_NUMBER}/g" kubernetes/deployment.yaml
                     cat kubernetes/deployment.yaml | grep mayowa88
                     git add kubernetes/deployment.yaml
                     git commit -a -m "Update deployment image to version ${BUILD_NUMBER}"
