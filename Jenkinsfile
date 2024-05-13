@@ -79,7 +79,7 @@ pipeline{
                     git commit -a -m "Update deployment image to version ${BUILD_NUMBER}"
                     git push https://${GITHUB_TOKEN}@github.com/${GIT_USER_NAME}/${GIT_REPO_NAME} HEAD:main
                     echo **********GOD IS MY REDEEMER**************
-                    echo **********I BELONG TO JESUS***************
+                    echo **********JESUS IS LORD OVER MY LIFE***************
                 '''
             }
         }
