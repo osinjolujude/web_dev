@@ -1,4 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
+so# This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
 name: Soccer_Blog_By_Mayowa
@@ -13,9 +13,10 @@ on:
 #   contents: read
 
 jobs:
-  build:
+  soccer_blog:
 
     runs-on: self-hosted
+    timeout-minutes: 30
 
     steps:
     - uses: actions/checkout@v4
