@@ -15,7 +15,7 @@ permissions:
 jobs:
   build:
 
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v4
@@ -27,6 +27,7 @@ jobs:
       run: |
         echo "-----------------=- preparing project environment -=------------------"
         # sudo apt update
+        sudo apt-get clean
         sudo apt-get update
         apt install docker.io -y
         python3 --version
