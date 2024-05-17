@@ -39,21 +39,21 @@ jobs:
         pwd
         whoami
         ls -a
-    - name: SonarQube Scan
-      uses: sonarsource/sonarqube-scan-action@v1
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        SONAR_HOST_URL: "http://20.191.117.153:9000/"
-        # -Dsonar.qualitygate.wait: true
-        # -Dproject.settings: ./sonar-project.properties
-        # -Dsonar.projectKey: Soccer_Blog
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=Soccer_Blog 
-            # -Dsonar.qualitygate.wait: true
-            # -Dproject.settings: ./sonar-project.properties
-            # -Dsonar.projectKey: Soccer_Blog
-          echo ********SONAR HAS COMPLETED ANAYSIS*************
+    # - name: SonarQube Scan
+    #   uses: sonarsource/sonarqube-scan-action@v1
+    #   env:
+    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+    #     SONAR_HOST_URL: ""
+    #     # -Dsonar.qualitygate.wait: true
+    #     # -Dproject.settings: ./sonar-project.properties
+    #     # -Dsonar.projectKey: Soccer_Blog
+    #     run: |
+    #       sonar-scanner \
+    #         -Dsonar.projectKey=Soccer_Blog 
+    #         # -Dsonar.qualitygate.wait: true
+    #         # -Dproject.settings: ./sonar-project.properties
+    #         # -Dsonar.projectKey: Soccer_Blog
+    #       echo ********SONAR HAS COMPLETED ANAYSIS*************
     #     # stop the build if there are Python syntax errors or undefined names
     #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
     #     # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
@@ -61,4 +61,29 @@ jobs:
     # - name: Test with pytest
     #   run: |
     #     pytest
-        
+
+    - name: Cache SonarQube binaries
+      uses: actions/cache@v2
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+
+    - name: Install SonarQube scanner
+      run: |
+        export SONAR_SCANNER_VERSION=4.6.2.2472
+        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip
+        unzip -o sonar-scanner.zip -d $HOME/.sonar/
+        export PATH=$HOME/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH
+
+    - name: Run SonarQube analysis
+      env:
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=Soccer_Blog \
+          -Dsonar.sources=. \
+          -Dsonar.host.url=${{ env.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ env.SONAR_TOKEN }}
+      
