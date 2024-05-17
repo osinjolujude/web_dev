@@ -69,12 +69,12 @@ jobs:
         key: ${{ runner.os }}-sonar
         restore-keys: ${{ runner.os }}-sonar
 
-    # - name: Install SonarQube scanner
-    #   run: |
-    #     export SONAR_SCANNER_VERSION=4.6.2.2472
-    #     curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip
-    #     unzip -o sonar-scanner.zip -d $HOME/.sonar/
-    #     export PATH=$HOME/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH
+    - name: Install SonarQube scanner
+      run: |
+        export SONAR_SCANNER_VERSION=4.6.2.2472
+        curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-${SONAR_SCANNER_VERSION}-linux.zip
+        unzip -o sonar-scanner.zip -d $HOME/.sonar/
+        export PATH=$HOME/adminuser/.sonar/sonar-scanner-${SONAR_SCANNER_VERSION}-linux/bin:$PATH
 
     - name: Run SonarQube analysis
       env:
