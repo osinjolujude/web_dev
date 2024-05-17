@@ -44,10 +44,15 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: "http://20.191.117.153:9000/"
-        -Dsonar.qualitygate.wait: true
-        -Dproject.settings: ./sonar-project.properties
-        -Dsonar.projectKey: Soccer_Blog
+        # -Dsonar.qualitygate.wait: true
+        # -Dproject.settings: ./sonar-project.properties
+        # -Dsonar.projectKey: Soccer_Blog
         run: |
+          sonar-scanner \
+            -Dsonar.projectKey=Soccer_Blog 
+            # -Dsonar.qualitygate.wait: true
+            # -Dproject.settings: ./sonar-project.properties
+            # -Dsonar.projectKey: Soccer_Blog
           echo ********SONAR HAS COMPLETED ANAYSIS*************
     #     # stop the build if there are Python syntax errors or undefined names
     #     flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
