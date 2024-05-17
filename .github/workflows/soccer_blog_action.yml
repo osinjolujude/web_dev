@@ -44,6 +44,8 @@ jobs:
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: "http://20.191.117.153:9000/"
+        -Dsonar.qualitygate.wait: true
+        -Dproject.settings: ./sonar-project.properties
         run: |
           echo ********SONAR HAS COMPLETED ANAYSIS*************
     #     # stop the build if there are Python syntax errors or undefined names
