@@ -108,7 +108,7 @@ jobs:
       # uses: mr-smithers-excellent/docker-build-push@v4
       with:
         context: .
-        file: ./web_dev/Dockerfile
+        file: ./Dockerfile
         push: true
         tags: ${{ secrets.DOCKERHUB_USER }}/soccer_blog:${{ github.run_number }}
       
