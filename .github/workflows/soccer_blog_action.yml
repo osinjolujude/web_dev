@@ -27,7 +27,7 @@ jobs:
       run: |
         echo "-----------------=- preparing project environment -=------------------"
         # sudo apt update
-        apt-get update
+        sudo apt-get update
         apt install docker.io -y
         python3 --version
         docker -v
