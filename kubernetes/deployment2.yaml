@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: soccer-blog
+  name: soccer-blog
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: soccer-blog
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: soccer-blog
+    spec:
+      containers:
+      - image: mayowa88/soccer_blog:84
+        name: soccer-blog-nd49b
+        envFrom:
+        - secretRef:
+            name: secret-key
+        env:
+        - name: FLASK_APP
+          value: "main.py"
+        ports:
+        - containerPort: 5002
+      - image: mayowa88/ultimate-cicd2
+	name: ultimate-cicd
+        resources: {}
+status: {}
